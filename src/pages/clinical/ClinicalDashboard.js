@@ -18,6 +18,11 @@ function ClinicalDashboard() {
     patient.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const totalPatients = patients.length;
+  const highRiskCount = patients.filter(p => p.riskLevel === 'High').length;
+  const mediumRiskCount = patients.filter(p => p.riskLevel === 'Medium').length;
+  const lowRiskCount = patients.filter(p => p.riskLevel === 'Low').length;
+
   const handleViewPatientRisk = (patient) => {
     navigate('/clinical/patient-risk', { state: { patient } });
   };
@@ -25,22 +30,41 @@ function ClinicalDashboard() {
   return (
     <div className="clinical-dashboard">
       <div className="clinical-header">
-        <h1>CLINICAL DASHBOARD</h1>
+        <h1>Clinical Dashboard</h1>
+      </div>
+
+      <div className="dashboard-stats">
+        <div className="stat-card">
+          <h3>Total Patients</h3>
+          <p className="stat-value">{totalPatients}</p>
+        </div>
+        <div className="stat-card">
+          <h3>High Risk</h3>
+          <p className="stat-value">{highRiskCount}</p>
+        </div>
+        <div className="stat-card">
+          <h3>Medium Risk</h3>
+          <p className="stat-value">{mediumRiskCount}</p>
+        </div>
+        <div className="stat-card">
+          <h3>Low Risk</h3>
+          <p className="stat-value">{lowRiskCount}</p>
+        </div>
       </div>
 
       <div className="search-section">
         <input
           type="text"
-          placeholder="Search Patient:"
+          placeholder="Search Patient by Name..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="search-input"
         />
-        <button className="search-button">Button</button>
+        <button className="search-button">Search</button>
       </div>
 
       <div className="patient-list-section">
-        <div className="section-label">Patient List:</div>
+        <div className="section-label">Patient List</div>
         
         <table className="patient-table">
           <thead>
@@ -52,9 +76,13 @@ function ClinicalDashboard() {
           </thead>
           <tbody>
             {filteredPatients.map((patient) => (
-              <tr key={patient.id}>
+              <tr key={patient.id} onClick={() => handleViewPatientRisk(patient)}>
                 <td>{patient.name}</td>
-                <td className={`risk-${patient.riskLevel.toLowerCase()}`}>{patient.riskLevel}</td>
+                <td>
+                  <span className={`risk-badge risk-${patient.riskLevel.toLowerCase()}`}>
+                    {patient.riskLevel}
+                  </span>
+                </td>
                 <td>{patient.lastAssessment}</td>
               </tr>
             ))}
