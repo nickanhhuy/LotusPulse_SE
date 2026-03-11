@@ -1,3 +1,57 @@
 .navigation {
-  /* Styles will be added here */
+  background: linear-gradient(135deg, #8B5A6F 0%, #6B4A57 100%);
+  padding: 18px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-brand {
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 35px;
+  margin: 0;
+  align-items: center;
+}
+
+.nav-menu a {
+  color: white;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.3s;
+  padding: 8px 16px;
+  border-radius: 6px;
+  position: relative;
+}
+
+.nav-menu a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: #F5E6E8;
+  transition: width 0.3s;
+}
+
+.nav-menu a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-menu a:hover::after {
+  width: 80%;
 }
