@@ -13,6 +13,7 @@ import ManageRecords from './pages/records/ManageRecords';
 import ReportsPage from './pages/records/ReportsPage';
 import PopulationDashboard from './pages/population/PopulationDashboard';
 import RiskTrendAnalysis from './pages/population/RiskTrendAnalysis';
+import PopulationRiskDashboard from './pages/population/PopulationRiskDashboard';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/records/reports" element={<ReportsPage />} />
           <Route path="/population/dashboard" element={<PopulationDashboard />} />
           <Route path="/population/trends" element={<RiskTrendAnalysis />} />
+          <Route path="/population/risk-dashboard" element={<PopulationRiskDashboard />} />
         </Routes>
       </div>
     </Router>
