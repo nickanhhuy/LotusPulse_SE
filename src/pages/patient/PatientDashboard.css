@@ -237,6 +237,19 @@
   text-align: center;
 }
 
+.chart-container {
+  min-height: 300px;
+  border: 2px solid #333;
+  background: white;
+  padding: 20px;
+  border-radius: 4px;
+}
+
+.risk-chart {
+  width: 100%;
+  height: auto;
+}
+
 @media (max-width: 1024px) {
   .patient-dashboard-container {
     flex-direction: column;
@@ -279,4 +292,90 @@
   .patient-image {
     width: 100%;
   }
+}
+
+.alert-config-section {
+  margin-bottom: 20px;
+}
+
+.config-card {
+  background: white;
+  border: 2px solid #333;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.config-card h3 {
+  margin: 0 0 20px 0;
+  padding: 10px;
+  background: #e0e0e0;
+  border: 1px solid #333;
+  font-size: 18px;
+  color: #333;
+}
+
+.config-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.config-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.config-field label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+.config-field select {
+  padding: 10px;
+  border: 2px solid #333;
+  border-radius: 6px;
+  font-size: 16px;
+  background: white;
+  cursor: pointer;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.status-warning {
+  background: #fee;
+  color: #c00;
+  border: 1px solid #c00;
+}
+
+.status-caution {
+  background: #ffeaa7;
+  color: #d63031;
+  border: 1px solid #fdcb6e;
+}
+
+.status-normal {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #28a745;
+}
+
+.history-table-section {
+  margin-top: 20px;
+}
+
+.history-table-section h3 {
+  margin: 0 0 15px 0;
+  padding: 10px;
+  background: #e0e0e0;
+  border: 1px solid #333;
+  font-size: 18px;
+  color: #333;
 }
