@@ -1,9 +1,12 @@
 import './PatientDashboard.css';
-import { mockPatientData } from '../../data/mockData';
+import { mockPatientsData } from '../../data/mockData';
 import { useState } from 'react';
 
 function PatientDashboard() {
   const [activeTab, setActiveTab] = useState('home');
+  const [selectedPatientId, setSelectedPatientId] = useState(1);
+  
+  const currentPatient = mockPatientsData.find(p => p.id === selectedPatientId) || mockPatientsData[0];
 
   const exportReport = () => {
     alert('Export Report functionality would be implemented here');
@@ -30,7 +33,7 @@ function PatientDashboard() {
           <text x="45" y="55" fontSize="12" fill="#666">100</text>
           
           <polyline
-            points={mockPatientData.detailedRiskHistory.slice().reverse().map((item, index) => {
+            points={currentPatient.detailedRiskHistory.slice().reverse().map((item, index) => {
               const x = 80 + (index * 65);
               const y = 250 - (item.riskScore * 2);
               return `${x},${y}`;
@@ -40,7 +43,7 @@ function PatientDashboard() {
             strokeWidth="3"
           />
           
-          {mockPatientData.detailedRiskHistory.slice().reverse().map((item, index) => {
+          {currentPatient.detailedRiskHistory.slice().reverse().map((item, index) => {
             const x = 80 + (index * 65);
             const y = 250 - (item.riskScore * 2);
             return (
@@ -77,27 +80,33 @@ function PatientDashboard() {
                 <div className="patient-details">
                   <div className="detail-field">
                     <label>Name:</label>
-                    <input type="text" value={mockPatientData.patientInfo.name} readOnly />
+                    <select value={selectedPatientId} onChange={(e) => setSelectedPatientId(Number(e.target.value))}>
+                      {mockPatientsData.map(patient => (
+                        <option key={patient.id} value={patient.id}>
+                          {patient.patientInfo.name}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                   <div className="detail-field">
                     <label>Age:</label>
-                    <input type="text" value={mockPatientData.patientInfo.age} readOnly />
+                    <input type="text" value={currentPatient.patientInfo.age} readOnly />
                   </div>
                   <div className="detail-field">
                     <label>Gender:</label>
-                    <input type="text" value={mockPatientData.patientInfo.gender} readOnly />
+                    <input type="text" value={currentPatient.patientInfo.gender} readOnly />
                   </div>
                   <div className="detail-field">
                     <label>Blood Type:</label>
-                    <input type="text" value={mockPatientData.patientInfo.bloodType} readOnly />
+                    <input type="text" value={currentPatient.patientInfo.bloodType} readOnly />
                   </div>
                   <div className="detail-field">
                     <label>Height:</label>
-                    <input type="text" value={mockPatientData.patientInfo.height} readOnly />
+                    <input type="text" value={currentPatient.patientInfo.height} readOnly />
                   </div>
                   <div className="detail-field">
                     <label>Weight:</label>
-                    <input type="text" value={mockPatientData.patientInfo.weight} readOnly />
+                    <input type="text" value={currentPatient.patientInfo.weight} readOnly />
                   </div>
                 </div>
               </div>
@@ -106,7 +115,9 @@ function PatientDashboard() {
             <div className="second-row">
               <div className="risk-card">
                 <h3>Current Heart Disease Risk</h3>
-                <div className="risk-level">HIGH RISK</div>
+                <div className="risk-level" style={{color: currentPatient.currentRisk.color}}>
+                  {currentPatient.currentRisk.level}
+                </div>
                 <div className="button-group">
                   <button className="btn" onClick={exportReport}>Export Report</button>
                   <button className="btn" onClick={configureAlerts}>Configure Alerts</button>
@@ -122,7 +133,7 @@ function PatientDashboard() {
                     </tr>
                   </thead>
                   <tbody>
-                    {mockPatientData.keyFactors.map((factor, index) => (
+                    {currentPatient.keyFactors.map((factor, index) => (
                       <tr key={index}>
                         <td>{factor.name}</td>
                         <td>{factor.value}</td>
@@ -158,7 +169,7 @@ function PatientDashboard() {
                   </tr>
                 </thead>
                 <tbody>
-                  {mockPatientData.attributes.map((attr, index) => (
+                  {currentPatient.attributes.map((attr, index) => (
                     <tr key={index}>
                       <td>{attr.name}</td>
                       <td>{attr.value}</td>
@@ -245,7 +256,7 @@ function PatientDashboard() {
                     </tr>
                   </thead>
                   <tbody>
-                    {mockPatientData.detailedRiskHistory.map((record, index) => (
+                    {currentPatient.detailedRiskHistory.map((record, index) => (
                       <tr key={index}>
                         <td>{record.date}</td>
                         <td>{record.riskScore}</td>

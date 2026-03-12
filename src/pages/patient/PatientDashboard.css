@@ -114,6 +114,15 @@
   background: white;
 }
 
+.detail-field select {
+  padding: 10px;
+  border: 2px solid #333;
+  border-radius: 6px;
+  font-size: 16px;
+  background: white;
+  cursor: pointer;
+}
+
 .factors-table-card {
   background: white;
   border: 2px solid #333;
