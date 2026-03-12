@@ -1,7 +1,31 @@
 import React from 'react';
+import { AreaChart, Area, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import './PopulationRiskDashboard.css';
 
 const PopulationRiskDashboard = () => {
+  // Trend data for 12 months
+  const trendData = [
+    { month: 'Apr 25', low: 58, medium: 24, high: 18 },
+    { month: 'May 25', low: 57, medium: 25, high: 18 },
+    { month: 'Jun 25', low: 56, medium: 26, high: 18 },
+    { month: 'Jul 25', low: 56, medium: 25, high: 19 },
+    { month: 'Aug 25', low: 55, medium: 27, high: 18 },
+    { month: 'Sep 25', low: 55, medium: 26, high: 19 },
+    { month: 'Oct 25', low: 54, medium: 27, high: 19 },
+    { month: 'Nov 25', low: 55, medium: 26, high: 19 },
+    { month: 'Dec 25', low: 54, medium: 27, high: 19 },
+    { month: 'Jan 26', low: 55, medium: 27, high: 18 },
+    { month: 'Feb 26', low: 56, medium: 25, high: 19 },
+    { month: 'Mar 26', low: 55, medium: 26.5, high: 18.5 }
+  ];
+
+  // Pie chart data
+  const pieData = [
+    { name: 'Low Risk', value: 55, color: '#10b981' },
+    { name: 'Medium Risk', value: 26.5, color: '#f59e0b' },
+    { name: 'High Risk', value: 18.5, color: '#ef4444' }
+  ];
+
   const kpiData = [
     {
       title: 'Total Patients Analyzed',
@@ -103,15 +127,40 @@ const PopulationRiskDashboard = () => {
       <div className="chart-grid">
         <div className="chart-card">
           <h3>Population Risk Trend Over Time (12 Months)</h3>
-          <div className="chart-placeholder">
-            [ Area Chart showing Low/Medium/High risk population percentages over time ]
-          </div>
+          <ResponsiveContainer width="100%" height={250}>
+            <AreaChart data={trendData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="month" style={{ fontSize: '12px' }} />
+              <YAxis style={{ fontSize: '12px' }} label={{ value: 'Percentage (%)', angle: -90, position: 'insideLeft' }} />
+              <Tooltip />
+              <Legend />
+              <Area type="monotone" dataKey="low" stackId="1" stroke="#10b981" fill="#10b981" name="Low Risk" />
+              <Area type="monotone" dataKey="medium" stackId="1" stroke="#f59e0b" fill="#f59e0b" name="Medium Risk" />
+              <Area type="monotone" dataKey="high" stackId="1" stroke="#ef4444" fill="#ef4444" name="High Risk" />
+            </AreaChart>
+          </ResponsiveContainer>
         </div>
         <div className="chart-card">
           <h3>Risk Distribution</h3>
-          <div className="chart-placeholder chart-pie">
-            [ Pie Chart: 55% Low, 26.5% Medium, 18.5% High ]
-          </div>
+          <ResponsiveContainer width="100%" height={250}>
+            <PieChart>
+              <Pie
+                data={pieData}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                label={({ name, value }) => `${name}: ${value}%`}
+                outerRadius={80}
+                fill="#8884d8"
+                dataKey="value"
+              >
+                {pieData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.color} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
         </div>
       </div>
 
