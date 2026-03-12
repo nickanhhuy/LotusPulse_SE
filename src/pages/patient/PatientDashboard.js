@@ -1,7 +1,10 @@
 import './PatientDashboard.css';
 import { mockPatientData } from '../../data/mockData';
+import { useState } from 'react';
 
 function PatientDashboard() {
+  const [activeTab, setActiveTab] = useState('home');
+
   const exportReport = () => {
     alert('Export Report functionality would be implemented here');
   };
@@ -11,12 +14,29 @@ function PatientDashboard() {
   };
 
   return (
-    <div className="patient-dashboard">
-      <div className="page-header">
-        <h1>Patient Portal</h1>
-      </div>
+    <div className="patient-dashboard-container">
+      <nav className="vertical-nav">
+        <ul>
+          <li className={activeTab === 'home' ? 'active' : ''} onClick={() => setActiveTab('home')}>
+            Home
+          </li>
+          <li className={activeTab === 'attributes' ? 'active' : ''} onClick={() => setActiveTab('attributes')}>
+            Attributes
+          </li>
+          <li className={activeTab === 'configure-alert' ? 'active' : ''} onClick={() => setActiveTab('configure-alert')}>
+            Configure Alert
+          </li>
+          <li className={activeTab === 'risk-history' ? 'active' : ''} onClick={() => setActiveTab('risk-history')}>
+            Risk History
+          </li>
+        </ul>
+      </nav>
+      <div className="patient-dashboard">
+        <div className="page-header">
+          <h1>Patient Portal</h1>
+        </div>
 
-      <div className="first-row">
+        <div className="first-row">
         <div className="patient-info-card">
           <div className="patient-image">
             <img src="/images/heart.jpg" alt="Patient" />
@@ -87,6 +107,7 @@ function PatientDashboard() {
             <p>Interactive Line Chart showing Risk Score trends over time</p>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );
