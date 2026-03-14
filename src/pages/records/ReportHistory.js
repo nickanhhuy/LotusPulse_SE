@@ -1,60 +1,40 @@
 import "./ManageRecords.css";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "../clinical/ClinicalDashboard.css";
 
-function ManageRecords() {
+function ReportHistory() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
+  const location = useLocation();
+  const patient = location.state?.patient || {
+    name: "John Doe",
+    age: 52,
+    riskLevel: "High",
+    lastAssessment: "Mar 10, 2026",
+  };
 
   const patients = [
     {
       id: 1,
-      name: "Vu Anh Huy Nguyen",
-      age: 45,
-      riskLevel: "Low",
-      lastAssessment: "Feb 2, 2026",
+      date: "14/3/2026 19:48:24",
     },
     {
       id: 2,
-      name: "Xuan Hoang Ha",
-      age: 38,
-      riskLevel: "Low",
-      lastAssessment: "Jan 10, 2026",
+      date: "15/3/2026 10:30:00",
     },
     {
       id: 3,
-      name: "John Mendes",
-      age: 62,
-      riskLevel: "High",
-      lastAssessment: "Jan 3, 2026",
-    },
-    {
-      id: 4,
-      name: "Park Kim",
-      age: 51,
-      riskLevel: "Medium",
-      lastAssessment: "Jan 1, 2026",
-    },
-    {
-      id: 5,
-      name: "Lanag Jun",
-      age: 58,
-      riskLevel: "High",
-      lastAssessment: "Dec 25, 2025",
+      date: "16/3/2026 14:15:00",
     },
   ];
 
-  const filteredPatients = patients.filter((patient) =>
-    patient.name.toLowerCase().includes(searchTerm.toLowerCase()),
+  const filteredReports = patients.filter((patient) =>
+    patient.date.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   const handleViewPatientRecordSettings = (patient) => {
     navigate(`/records/manage/patient/${patient.id}`, { state: { patient } });
-  };
-
-  const handleViewPatientReportHistory = (patient) => {
-    navigate(`/records/manage/history/${patient.id}`, { state: { patient } });
   };
 
   const handleViewPatientReport = (patient) => {
@@ -64,13 +44,19 @@ function ManageRecords() {
   return (
     <div className="clinical-dashboard">
       <div className="clinical-header">
-        <h1>Record Management</h1>
+        <h1>Report History</h1>
+      </div>
+
+      <div className="content-section">
+        <div>
+          Patient:{patient.name} (ID: {patient.id})
+        </div>
       </div>
 
       <div className="search-section">
         <input
           type="text"
-          placeholder="Search Patient by Name..."
+          placeholder="Search Reports by Date..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="search-input"
@@ -82,34 +68,33 @@ function ManageRecords() {
         <table className="patient-table">
           <thead>
             <tr>
-              <th>Patient Name</th>
+              <th>Date</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {filteredPatients.map((patient) => (
+            {filteredReports.map((patient) => (
               <tr key={patient.id}>
-                <td>{patient.name}</td>
+                <td>{patient.date}</td>
                 <td>
                   <span
                     className={`risk-badge risk-low`}
-                    onClick={() => handleViewPatientReport(patient)}
+                    // onClick={() => handleViewPatientReport(patient)}
                   >
-                    Generate New Report
-                  </span>
-
-                  <span
-                    className={`risk-badge risk-high`}
-                    onClick={() => handleViewPatientReportHistory(patient)}
-                  >
-                    Report History
+                    Duplicate
                   </span>
 
                   <span
                     className={`risk-badge risk-medium`}
-                    onClick={() => handleViewPatientRecordSettings(patient)}
+                    // onClick={() => handleViewPatientRecordSettings(patient)}
                   >
-                    Update Settings
+                    Edit
+                  </span>
+                  <span
+                    className={`risk-badge risk-high`}
+                    // onClick={() => handleViewPatientRecordSettings(patient)}
+                  >
+                    Delete
                   </span>
                 </td>
               </tr>
@@ -121,4 +106,4 @@ function ManageRecords() {
   );
 }
 
-export default ManageRecords;
+export default ReportHistory;
