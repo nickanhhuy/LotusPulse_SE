@@ -48,7 +48,7 @@ function PatientRecordSettings() {
                 <td>
                   {setting.options.map((opt) => (
                     <span key={opt} className="option-badge">
-                      {opt}
+                      {opt},
                     </span>
                   ))}
                 </td>
@@ -74,7 +74,7 @@ function PatientRecordSettings() {
                 <td>
                   {setting.options.map((opt) => (
                     <span key={opt} className="option-badge">
-                      {opt}
+                      {opt},
                     </span>
                   ))}
                 </td>
@@ -100,7 +100,7 @@ function PatientRecordSettings() {
                 <td>
                   {setting.options.map((opt) => (
                     <span key={opt} className="option-badge">
-                      {opt}
+                      {opt},
                     </span>
                   ))}
                 </td>
