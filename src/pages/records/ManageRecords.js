@@ -53,6 +53,10 @@ function ManageRecords() {
     navigate(`/records/manage/patient/${patient.id}`, { state: { patient } });
   };
 
+  const handleViewPatientReport = (patient) => {
+    navigate(`/records/generate/patient/${patient.id}`, { state: { patient } });
+  };
+
   return (
     <div className="clinical-dashboard">
       <div className="clinical-header">
@@ -75,7 +79,7 @@ function ManageRecords() {
           <thead>
             <tr>
               <th>Patient Name</th>
-              <th>Settings</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -85,9 +89,23 @@ function ManageRecords() {
                 <td>
                   <span
                     className={`risk-badge risk-low`}
+                    onClick={() => handleViewPatientReport(patient)}
+                  >
+                    Generate New Report
+                  </span>
+
+                  <span
+                    className={`risk-badge risk-high`}
                     onClick={() => handleViewPatientRecordSettings(patient)}
                   >
-                    Update
+                    Report History
+                  </span>
+
+                  <span
+                    className={`risk-badge risk-medium`}
+                    onClick={() => handleViewPatientRecordSettings(patient)}
+                  >
+                    Update Settings
                   </span>
                 </td>
               </tr>

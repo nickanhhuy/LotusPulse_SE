@@ -23,7 +23,7 @@ function PatientRecordSettings() {
   return (
     <div className="clinical-patient-risk">
       <div className="page-header">
-        <h1>Patient Risk Assessment</h1>
+        <h1>Report Settings</h1>
       </div>
 
       <div className="patient-summary">
