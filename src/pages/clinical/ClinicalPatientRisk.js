@@ -11,9 +11,9 @@ function ClinicalPatientRisk() {
   // Get patient passed from Clinical Dashboard
   const selectedPatient = location.state?.patient;
 
-  // Match with full patient data from mockData
+  // Match with full patient data from mockData — match by name or id
   const fullPatient = mockPatientsData.find(p =>
-    p.patientInfo.name === selectedPatient?.name
+    p.id === selectedPatient?.id || p.patientInfo.name === selectedPatient?.name
   ) || mockPatientsData[0];
 
   const patientInfo = fullPatient.patientInfo;

@@ -1,30 +1,38 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { mockPatientsData } from '../../data/mockData';
 import './ClinicalDashboard.css';
 
 function ClinicalDashboard() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
 
-  const patients = [
-    { id: 1, name: 'Vu Anh Huy Nguyen', age: 45, riskLevel: 'Low', lastAssessment: 'Feb 2, 2026' },
-    { id: 2, name: 'Xuan Hoang Ha', age: 38, riskLevel: 'Low', lastAssessment: 'Jan 10, 2026' },
-    { id: 3, name: 'John Mendes', age: 62, riskLevel: 'High', lastAssessment: 'Jan 3, 2026' },
-    { id: 4, name: 'Park Kim', age: 51, riskLevel: 'Medium', lastAssessment: 'Jan 1, 2026' },
-    { id: 5, name: 'Lanag Jun', age: 58, riskLevel: 'High', lastAssessment: 'Dec 25, 2025' }
-  ];
+  // Use mockPatientsData directly so names match ClinicalPatientRisk lookup
+  const patients = mockPatientsData.map(p => ({
+    id: p.id,
+    name: p.patientInfo.name,
+    age: p.patientInfo.age,
+    riskLevel: p.currentRisk.level.split(' ')[0], // "HIGH RISK" → "High"
+    lastAssessment: p.patientInfo.lastAssessment
+  }));
+
+  // Normalize risk level capitalisation: "HIGH" → "High"
+  const normalizeRisk = (level) => {
+    const map = { HIGH: 'High', MEDIUM: 'Medium', LOW: 'Low' };
+    return map[level.toUpperCase()] || level;
+  };
 
   const filteredPatients = patients.filter(patient =>
     patient.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const totalPatients = patients.length;
-  const highRiskCount = patients.filter(p => p.riskLevel === 'High').length;
-  const mediumRiskCount = patients.filter(p => p.riskLevel === 'Medium').length;
-  const lowRiskCount = patients.filter(p => p.riskLevel === 'Low').length;
+  const highRiskCount = patients.filter(p => normalizeRisk(p.riskLevel) === 'High').length;
+  const mediumRiskCount = patients.filter(p => normalizeRisk(p.riskLevel) === 'Medium').length;
+  const lowRiskCount = patients.filter(p => normalizeRisk(p.riskLevel) === 'Low').length;
 
   const handleViewPatientRisk = (patient) => {
-    navigate('/clinical/patient-risk', { state: { patient } });
+    navigate('/clinical/patient-risk', { state: { patient: { ...patient, riskLevel: normalizeRisk(patient.riskLevel) } } });
   };
 
   return (
@@ -65,7 +73,7 @@ function ClinicalDashboard() {
 
       <div className="patient-list-section">
         <div className="section-label">Patient List</div>
-        
+
         <table className="patient-table">
           <thead>
             <tr>
@@ -79,8 +87,8 @@ function ClinicalDashboard() {
               <tr key={patient.id} onClick={() => handleViewPatientRisk(patient)}>
                 <td>{patient.name}</td>
                 <td>
-                  <span className={`risk-badge risk-${patient.riskLevel.toLowerCase()}`}>
-                    {patient.riskLevel}
+                  <span className="risk-badge">
+                    {normalizeRisk(patient.riskLevel)}
                   </span>
                 </td>
                 <td>{patient.lastAssessment}</td>
@@ -91,7 +99,7 @@ function ClinicalDashboard() {
       </div>
 
       <div className="action-section">
-        <button 
+        <button
           className="view-patient-button"
           onClick={() => filteredPatients.length > 0 && handleViewPatientRisk(filteredPatients[0])}
         >
