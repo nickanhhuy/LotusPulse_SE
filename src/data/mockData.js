@@ -415,7 +415,115 @@ export const mockPatientsData = [
 
 export const mockPatientData = mockPatientsData[0];
 
-export const mockClinicalData = {};
+// Clinical Dashboard Data - Based on Class Diagram
+export const mockClinicalData = {
+  // RiskAssessment objects for each patient
+  riskAssessments: {
+    1: {
+      patientId: 1,
+      riskScore: 0.78,
+      timestamp: '2026-03-11T10:30:00',
+      risk_level: 'High',
+      // Feature importance from Risk Prediction Engine
+      contributingFactors: [
+        { factor: 'Blood Pressure', importance: 0.25, value: '145/90 mmHg', status: 'High' },
+        { factor: 'Cholesterol Level', importance: 0.22, value: '240 mg/dL', status: 'High' },
+        { factor: 'Coronary Calcium Score', importance: 0.18, value: '250', status: 'Moderate' },
+        { factor: 'C-Reactive Protein', importance: 0.15, value: '4.5 mg/L', status: 'High' },
+        { factor: 'BMI', importance: 0.12, value: '28.5', status: 'Overweight' },
+        { factor: 'Sleep Quality', importance: 0.08, value: '5 hrs/night', status: 'Poor' }
+      ]
+    },
+    2: {
+      patientId: 2,
+      riskScore: 0.52,
+      timestamp: '2026-03-10T14:15:00',
+      risk_level: 'Medium',
+      contributingFactors: [
+        { factor: 'Blood Pressure', importance: 0.28, value: '130/82 mmHg', status: 'Elevated' },
+        { factor: 'Cholesterol Level', importance: 0.24, value: '210 mg/dL', status: 'Borderline High' },
+        { factor: 'BMI', importance: 0.20, value: '25.8', status: 'Overweight' },
+        { factor: 'Coronary Calcium Score', importance: 0.15, value: '45', status: 'Mild' },
+        { factor: 'C-Reactive Protein', importance: 0.13, value: '2.1 mg/L', status: 'Average' }
+      ]
+    },
+    3: {
+      patientId: 3,
+      riskScore: 0.32,
+      timestamp: '2026-03-09T09:45:00',
+      risk_level: 'Low',
+      contributingFactors: [
+        { factor: 'Blood Pressure', importance: 0.22, value: '118/76 mmHg', status: 'Normal' },
+        { factor: 'Cholesterol Level', importance: 0.20, value: '185 mg/dL', status: 'Normal' },
+        { factor: 'BMI', importance: 0.18, value: '23.2', status: 'Normal' },
+        { factor: 'Exercise Frequency', importance: 0.15, value: '5 times/week', status: 'Excellent' },
+        { factor: 'HDL Cholesterol', importance: 0.12, value: '58 mg/dL', status: 'Good' },
+        { factor: 'C-Reactive Protein', importance: 0.13, value: '0.8 mg/L', status: 'Low' }
+      ]
+    },
+    4: {
+      patientId: 4,
+      riskScore: 0.82,
+      timestamp: '2026-03-08T11:20:00',
+      risk_level: 'High',
+      contributingFactors: [
+        { factor: 'Blood Pressure', importance: 0.24, value: '152/95 mmHg', status: 'Stage 2 High' },
+        { factor: 'Cholesterol Level', importance: 0.21, value: '265 mg/dL', status: 'High' },
+        { factor: 'BMI', importance: 0.19, value: '33.5', status: 'Obese' },
+        { factor: 'Coronary Calcium Score', importance: 0.17, value: '420', status: 'Severe' },
+        { factor: 'Smoking Status', importance: 0.12, value: 'Current Smoker', status: 'High Risk' },
+        { factor: 'C-Reactive Protein', importance: 0.07, value: '6.2 mg/L', status: 'Very High' }
+      ]
+    },
+    5: {
+      patientId: 5,
+      riskScore: 0.48,
+      timestamp: '2026-03-12T16:00:00',
+      risk_level: 'Medium',
+      contributingFactors: [
+        { factor: 'Blood Pressure', importance: 0.26, value: '128/80 mmHg', status: 'Elevated' },
+        { factor: 'Cholesterol Level', importance: 0.23, value: '205 mg/dL', status: 'Borderline High' },
+        { factor: 'C-Reactive Protein', importance: 0.18, value: '2.8 mg/L', status: 'Average' },
+        { factor: 'Homocysteine', importance: 0.16, value: '13 µmol/L', status: 'Borderline' },
+        { factor: 'Family History', importance: 0.17, value: 'Mother had hypertension', status: 'Caution' }
+      ]
+    }
+  },
+
+  // ClinicalNote objects
+  clinicalNotes: [
+    {
+      note_id: 1,
+      patientId: 1,
+      note_date: '2026-03-11T10:45:00',
+      observation: 'Patient shows elevated blood pressure and cholesterol levels. Reports poor sleep quality and high stress at work.',
+      recommendation: 'Recommend medication adjustment for blood pressure. Suggest stress management counseling and sleep hygiene education. Follow-up in 2 weeks.'
+    },
+    {
+      note_id: 2,
+      patientId: 2,
+      note_date: '2026-03-10T14:30:00',
+      observation: 'Patient maintaining stable condition with borderline cholesterol. Exercise routine is consistent.',
+      recommendation: 'Continue current lifestyle modifications. Monitor cholesterol levels quarterly. Maintain exercise regimen.'
+    }
+  ],
+
+  // ClinicalReport objects
+  clinicalReports: [
+    {
+      report_ID: 'CR-2026-001',
+      patientId: 1,
+      report_date: '2026-03-11T11:00:00',
+      summary: 'Patient John Mendes (55M) presents with high cardiovascular risk (score: 0.78). Primary concerns include elevated blood pressure (145/90), high cholesterol (240 mg/dL), and poor sleep quality. Immediate intervention recommended with medication adjustment and lifestyle modifications. Close monitoring required.'
+    },
+    {
+      report_ID: 'CR-2026-002',
+      patientId: 2,
+      report_date: '2026-03-10T15:00:00',
+      summary: 'Patient Park Kim (48F) shows medium cardiovascular risk (score: 0.52). Borderline cholesterol and elevated blood pressure noted. Patient demonstrates good compliance with exercise routine. Continue preventive measures and regular monitoring.'
+    }
+  ]
+};
 
 export const mockRecordsData = {};
 
