@@ -1,0 +1,268 @@
+.saved-assessments {
+  background: white;
+  border-radius: 8px;
+  padding: 28px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #d1d5db;
+}
+
+.saved-assessments-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.saved-assessments-header h3 {
+  color: #111827;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.saved-assessments-loading,
+.saved-assessments-empty {
+  text-align: center;
+  padding: 48px 30px;
+  color: #6b7280;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+}
+
+.empty-hint {
+  font-size: 14px;
+  color: #9ca3af;
+  margin-top: 8px;
+}
+
+.assessments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.assessment-card {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 20px;
+  background: white;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.assessment-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-color: #9ca3af;
+}
+
+.assessment-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.assessment-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.assessment-date {
+  color: #374151;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.assessment-risk-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  width: fit-content;
+}
+
+.assessment-score {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.assessment-card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 0;
+}
+
+.btn-small {
+  padding: 11px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  flex: 1;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: #8B5A6F;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #6d4557;
+}
+
+.btn-danger {
+  background: #dc2626;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #b91c1c;
+}
+
+.assessment-details-expanded {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 2px solid #e5e7eb;
+}
+
+.assessment-details-expanded h4 {
+  color: #111827;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.factors-table-compact {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: white;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 14px;
+  border: 2px solid #9ca3af;
+}
+
+.factors-table-compact th {
+  background: #f3f4f6;
+  padding: 12px 14px;
+  text-align: left;
+  font-weight: 700;
+  color: #111827;
+  font-size: 12px;
+  border-bottom: 2px solid #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.factors-table-compact td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #d1d5db;
+  color: #111827;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.factors-table-compact tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.factors-table-compact tbody tr:hover {
+  background: #f9fafb;
+}
+
+.status-badge-small {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.status-badge-small.status-high,
+.status-badge-small.status-stage-2-high {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #ef4444;
+}
+
+.status-badge-small.status-elevated,
+.status-badge-small.status-borderline-high,
+.status-badge-small.status-slightly-elevated {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #f59e0b;
+}
+
+.status-badge-small.status-normal {
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #22c55e;
+}
+
+.status-badge-small.status-overweight,
+.status-badge-small.status-obese,
+.status-badge-small.status-underweight {
+  background: #fff7ed;
+  color: #9a3412;
+  border: 1px solid #f97316;
+}
+
+.assessment-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  background: #f9fafb;
+  border-radius: 6px;
+  margin-top: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.assessment-meta small {
+  color: #6b7280;
+  font-size: 11px;
+  font-family: 'Courier New', monospace;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .saved-assessments {
+    padding: 15px;
+  }
+
+  .saved-assessments-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .assessment-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .assessment-card-actions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .btn-small {
+    width: 100%;
+  }
+}

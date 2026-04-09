@@ -13,7 +13,7 @@ function PatientDashboard() {
   };
 
   const configureAlerts = () => {
-    alert('Configure Alerts functionality would be implemented here');
+    setActiveTab('configure-alert');
   };
 
   const renderRiskChart = () => {

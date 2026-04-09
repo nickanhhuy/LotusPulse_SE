@@ -17,6 +17,7 @@ import PopulationRiskDashboard from './pages/population/PopulationRiskDashboard'
 import PatientRecordSettings from './pages/records/PatientRecordSettings';
 import ReportPreview from './pages/records/ReportPreview';
 import ReportHistory from './pages/records/ReportHistory';
+import ViewHeartDiseaseRisk from './pages/patient/ViewHeartDiseaseRisk';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/patient/dashboard" element={<PatientDashboard />} />
           <Route path="/patient/risk-details" element={<PatientRiskDetails />} />
           <Route path="/patient/risk-history" element={<PatientRiskHistory />} />
+          <Route path="/patient/view-risk" element={<ViewHeartDiseaseRisk />} />
           <Route path="/clinical/dashboard" element={<ClinicalDashboard />} />
           <Route path="/clinical/patient-risk" element={<ClinicalPatientRisk />} />
           <Route path="/clinical/note-report" element={<ClinicalNoteReport />} />
