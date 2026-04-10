@@ -1,11 +1,13 @@
 import "./ManageRecords.css";
-import { useState } from "react";
+import { useState, useEffect, use } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../clinical/ClinicalDashboard.css";
+import { mockReports } from "../../data/reportMockData";
 
 function ReportHistory() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
+  const [reports, setReports] = useState(mockReports);
   const location = useLocation();
   const patient = location.state?.patient || {
     name: "John Doe",
@@ -14,31 +16,52 @@ function ReportHistory() {
     lastAssessment: "Mar 10, 2026",
   };
 
-  const patients = [
-    {
-      id: 1,
-      date: "14/3/2026 19:48:24",
-    },
-    {
-      id: 2,
-      date: "15/3/2026 10:30:00",
-    },
-    {
-      id: 3,
-      date: "16/3/2026 14:15:00",
-    },
-  ];
-
-  const filteredReports = patients.filter((patient) =>
-    patient.date.toLowerCase().includes(searchTerm.toLowerCase()),
+  const filteredReports = reports.filter(
+    (report) =>
+      report.date.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      report.patientId === patient.id,
   );
 
-  const handleViewPatientRecordSettings = (patient) => {
-    navigate(`/records/manage/patient/${patient.id}`, { state: { patient } });
+  function formatDate(date) {
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    const seconds = date.getSeconds().toString().padStart(2, "0");
+
+    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+  }
+
+  const handleView = (reportId) => {
+    navigate("/records/view/" + reportId, { state: { patient } });
+  }
+
+  const handleDuplicate = (reportId) => {
+    const reportToDuplicate = reports.find((r) => r.id === reportId);
+    const id = Math.max(...reports.map((r) => r.id)) + 1;
+
+    if (reportToDuplicate) {
+      const newReport = {
+        ...reportToDuplicate,
+        date: formatDate(new Date()),
+        id: id,
+      };
+      mockReports.push(newReport);
+      setReports([...mockReports]);
+    }
   };
 
-  const handleViewPatientReport = (patient) => {
-    navigate(`/records/generate/patient/${patient.id}`, { state: { patient } });
+  const handleDelete = (reportId) => {
+    if (window.confirm("Are you sure you want to delete this report?")) {
+      const index = mockReports.findIndex((r) => r.id === reportId);
+      if (index !== -1) {
+        mockReports.splice(index, 1);
+      }
+
+      setReports([...mockReports]);
+    }
   };
 
   return (
@@ -73,26 +96,27 @@ function ReportHistory() {
             </tr>
           </thead>
           <tbody>
-            {filteredReports.map((patient) => (
-              <tr key={patient.id}>
-                <td>{patient.date}</td>
+            {filteredReports.map((report) => (
+              <tr key={report.id}>
+                <td>{report.date}</td>
                 <td>
                   <span
+                    className={`risk-badge risk-medium`}
+                    onClick={() => handleView(report.id)}
+                  >
+                    View
+                  </span>
+
+                  <span
                     className={`risk-badge risk-low`}
-                    // onClick={() => handleViewPatientReport(patient)}
+                    onClick={() => handleDuplicate(report.id)}
                   >
                     Duplicate
                   </span>
 
                   <span
-                    className={`risk-badge risk-medium`}
-                    // onClick={() => handleViewPatientRecordSettings(patient)}
-                  >
-                    Edit
-                  </span>
-                  <span
                     className={`risk-badge risk-high`}
-                    // onClick={() => handleViewPatientRecordSettings(patient)}
+                    onClick={() => handleDelete(report.id)}
                   >
                     Delete
                   </span>

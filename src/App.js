@@ -16,6 +16,7 @@ import RiskTrendAnalysis from './pages/population/RiskTrendAnalysis';
 import PopulationRiskDashboard from './pages/population/PopulationRiskDashboard';
 import PatientRecordSettings from './pages/records/PatientRecordSettings';
 import ReportPreview from './pages/records/ReportPreview';
+import FinalReport from './pages/records/FinalReport';
 import ReportHistory from './pages/records/ReportHistory';
 import ViewHeartDiseaseRisk from './pages/patient/ViewHeartDiseaseRisk';
 
@@ -35,6 +36,7 @@ function App() {
           <Route path="/clinical/note-report" element={<ClinicalNoteReport />} />
           <Route path="/records/manage" element={<ManageRecords />} />
           <Route path="/records/generate/patient/:id" element={<ReportPreview />} />
+          <Route path="/records/view/:id" element={<FinalReport />} />
           <Route path="/records/manage/history/:id" element={<ReportHistory />} />
           <Route path="/records/manage/patient/:id" element={<PatientRecordSettings />} />
           <Route path="/records/reports" element={<ReportsPage />} />

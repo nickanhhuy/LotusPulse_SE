@@ -1,6 +1,8 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import "./ClinicalPatientRisk.css";
 import { mockPatientsData } from "../../data/mockData";
+import { mockReports, defaultSettings } from "../../data/reportMockData";
+import { useState } from "react";
 
 function ReportPreview() {
   const location = useLocation();
@@ -11,6 +13,7 @@ function ReportPreview() {
     riskLevel: "High",
     lastAssessment: "Mar 10, 2026",
   };
+  const [settings, setSettings] = useState({ ...defaultSettings });
 
   const currentPatient =
     mockPatientsData.find((p) => p.id === patient.id) || mockPatientsData[0];
@@ -35,6 +38,19 @@ function ReportPreview() {
     { year: "2025", level: "High", score: 0.75 },
     { year: "2026", level: patient.riskLevel, score: riskScore },
   ];
+
+  const handleGenerateReport = () => {
+    const id = Math.max(...mockReports.map((r) => r.id)) + 1;
+
+    mockReports.push({
+      id: id,
+      patientId: patient.id,
+      date: new Date().toLocaleString(),
+      settings: settings,
+    });
+
+    navigate("/records/manage/history/" + patient.id, { state: { patient } });
+  };
 
   const renderRiskChart = () => {
     return (
@@ -181,7 +197,19 @@ function ReportPreview() {
             type="checkbox"
             id="saveSettings"
             name="saveSettings"
-            defaultChecked={true}
+            checked={settings.sections.currentRiskAssessment.included}
+            onChange={(e) =>
+              setSettings({
+                ...settings,
+                sections: {
+                  ...settings.sections,
+                  currentRiskAssessment: {
+                    ...settings.sections.currentRiskAssessment,
+                    included: e.target.checked,
+                  },
+                },
+              })
+            }
             style={{ margin: "0px 5px", float: "right" }}
           />
           <div className="risk-display">
@@ -226,7 +254,31 @@ function ReportPreview() {
                     type="checkbox"
                     id="saveSettings"
                     name="saveSettings"
-                    defaultChecked={true}
+                    checked={settings.sections.patientAttributes.attributes.some(
+                      (a) => a.name === attr.name && a.included,
+                    )}
+                    onChange={(e) => {
+                      const updatedAttributes =
+                        settings.sections.patientAttributes.attributes.map(
+                          (a) => {
+                            if (a.name === attr.name) {
+                              return { ...a, included: e.target.checked };
+                            }
+                            return a;
+                          },
+                        );
+
+                      setSettings({
+                        ...settings,
+                        sections: {
+                          ...settings.sections,
+                          patientAttributes: {
+                            ...settings.sections.patientAttributes,
+                            attributes: updatedAttributes,
+                          },
+                        },
+                      });
+                    }}
                     style={{ margin: "0px 5px" }}
                   />
                 </td>
@@ -246,7 +298,29 @@ function ReportPreview() {
                 type="checkbox"
                 id="saveSettings"
                 name="saveSettings"
-                defaultChecked={true}
+                checked={settings.sections.contributingFactors.factors.some(
+                  (f) => f.name === factor && f.included,
+                )}
+                onChange={(e) => {
+                  const updatedFactors =
+                    settings.sections.contributingFactors.factors.map((f) => {
+                      if (f.name === factor) {
+                        return { ...f, included: e.target.checked };
+                      }
+                      return f;
+                    });
+
+                  setSettings({
+                    ...settings,
+                    sections: {
+                      ...settings.sections,
+                      contributingFactors: {
+                        ...settings.sections.contributingFactors,
+                        factors: updatedFactors,
+                      },
+                    },
+                  });
+                }}
                 style={{ margin: "0px 5px", float: "right" }}
               />
             </li>
@@ -283,6 +357,29 @@ function ReportPreview() {
                     id="saveSettings"
                     name="saveSettings"
                     defaultChecked={true}
+                    checked={settings.sections.riskHistory.records.some(
+                      (r) => r.year === record.year && r.included,
+                    )}
+                    onChange={(e) => {
+                      const updatedRecords =
+                        settings.sections.riskHistory.records.map((r) => {
+                          if (r.year === record.year) {
+                            return { ...r, included: e.target.checked };
+                          }
+                          return r;
+                        });
+
+                      setSettings({
+                        ...settings,
+                        sections: {
+                          ...settings.sections,
+                          riskHistory: {
+                            ...settings.sections.riskHistory,
+                            records: updatedRecords,
+                          },
+                        },
+                      });
+                    }}
                     style={{ margin: "0px 5px" }}
                   />
                 </td>
@@ -299,7 +396,19 @@ function ReportPreview() {
             type="checkbox"
             id="saveSettings"
             name="saveSettings"
-            defaultChecked={true}
+            checked={settings.sections.riskChart.included}
+            onChange={(e) =>
+              setSettings({
+                ...settings,
+                sections: {
+                  ...settings.sections,
+                  riskChart: {
+                    ...settings.sections.riskChart,
+                    included: e.target.checked,
+                  },
+                },
+              })
+            }
             style={{ margin: "0px 5px", float: "right" }}
           />
         </h3>
@@ -325,12 +434,7 @@ function ReportPreview() {
         >
           Back to Dashboard
         </button>
-        <button
-          className="btn-primary"
-          onClick={() =>
-            navigate("/records/generate/patient/:id", { state: { patient } })
-          }
-        >
+        <button className="btn-primary" onClick={handleGenerateReport}>
           Generate Report
         </button>
       </div>
