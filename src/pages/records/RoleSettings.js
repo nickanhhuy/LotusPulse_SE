@@ -1,17 +1,23 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import "../clinical/ClinicalPatientRisk.css";
-import { roleAccessList } from "../../data/accessStorage";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import "../clinical/ClinicalPatientRisk.css";
+import {
+  getAccessForAdmin,
+  getAccessForDoctor,
+  getAccessForPatient,
+  updateAccess,
+} from "../../services/AccessController";
 
 function RoleSettings() {
-  const location = useLocation();
   const navigate = useNavigate();
 
-  const [accessList, setAccessList] = useState(roleAccessList);
+  const adminAccess = getAccessForAdmin();
+  const doctorAccess = getAccessForDoctor();
+  const patientAccess = getAccessForPatient();
 
-  const adminAccess = roleAccessList.find((r) => r.role === "admin");
-  const doctorAccess = roleAccessList.find((r) => r.role === "doctor");
-  const patientAccess = roleAccessList.find((r) => r.role === "patient");
+  const [adminSettings, setAdminSettings] = useState({ ...adminAccess });
+  const [doctorSettings, setDoctorSettings] = useState({ ...doctorAccess });
+  const [patientSettings, setPatientSettings] = useState({ ...patientAccess });
 
   return (
     <div className="clinical-patient-risk">
@@ -35,13 +41,14 @@ function RoleSettings() {
                 <td>
                   <input
                     type="checkbox"
-                    checked={adminAccess.view}
+                    checked={adminSettings.view}
                     onChange={() => {
-                      const updatedList = accessList.map((r) =>
-                        r.role === "admin" ? { ...r, view: !r.view } : r,
-                      );
-                      setAccessList(updatedList);
-                      adminAccess.view = !adminAccess.view;
+                      const newSettings = {
+                        ...adminSettings,
+                        view: !adminSettings.view,
+                      };
+                      setAdminSettings(newSettings);
+                      updateAccess(newSettings);
                     }}
                   />
                 </td>
@@ -51,13 +58,14 @@ function RoleSettings() {
                 <td>
                   <input
                     type="checkbox"
-                    checked={adminAccess.create}
+                    checked={adminSettings.create}
                     onChange={() => {
-                      const updatedList = accessList.map((r) =>
-                        r.role === "admin" ? { ...r, create: !r.create } : r,
-                      );
-                      setAccessList(updatedList);
-                      adminAccess.create = !adminAccess.create;
+                      const newSettings = {
+                        ...adminSettings,
+                        create: !adminSettings.create,
+                      };
+                      setAdminSettings(newSettings);
+                      updateAccess(newSettings);
                     }}
                   />
                 </td>
@@ -67,13 +75,14 @@ function RoleSettings() {
                 <td>
                   <input
                     type="checkbox"
-                    checked={adminAccess.edit}
+                    checked={adminSettings.edit}
                     onChange={() => {
-                      const updatedList = accessList.map((r) =>
-                        r.role === "admin" ? { ...r, edit: !r.edit } : r,
-                      );
-                      setAccessList(updatedList);
-                      adminAccess.edit = !adminAccess.edit;
+                      const newSettings = {
+                        ...adminSettings,
+                        edit: !adminSettings.edit,
+                      };
+                      setAdminSettings(newSettings);
+                      updateAccess(newSettings);
                     }}
                   />
                 </td>
@@ -83,13 +92,14 @@ function RoleSettings() {
                 <td>
                   <input
                     type="checkbox"
-                    checked={adminAccess.delete}
+                    checked={adminSettings.delete}
                     onChange={() => {
-                      const updatedList = accessList.map((r) =>
-                        r.role === "admin" ? { ...r, delete: !r.delete } : r,
-                      );
-                      setAccessList(updatedList);
-                      adminAccess.delete = !adminAccess.delete;
+                      const newSettings = {
+                        ...adminSettings,
+                        delete: !adminSettings.delete,
+                      };
+                      setAdminSettings(newSettings);
+                      updateAccess(newSettings);
                     }}
                   />
                 </td>
@@ -115,13 +125,14 @@ function RoleSettings() {
                 <td>
                   <input
                     type="checkbox"
-                    checked={doctorAccess.view}
+                    checked={doctorSettings.view}
                     onChange={() => {
-                      const updatedList = roleAccessList.map((r) =>
-                        r.role === "doctor" ? { ...r, view: !r.view } : r,
-                      );
-                      setAccessList(updatedList);
-                      doctorAccess.view = !doctorAccess.view;
+                      const newSettings = {
+                        ...doctorSettings,
+                        view: !doctorSettings.view,
+                      };
+                      setDoctorSettings(newSettings);
+                      updateAccess(newSettings);
                     }}
                   />
                 </td>
@@ -131,13 +142,14 @@ function RoleSettings() {
                 <td>
                   <input
                     type="checkbox"
-                    checked={doctorAccess.create}
+                    checked={doctorSettings.create}
                     onChange={() => {
-                      const updatedList = roleAccessList.map((r) =>
-                        r.role === "doctor" ? { ...r, create: !r.create } : r,
-                      );
-                      setAccessList(updatedList);
-                      doctorAccess.create = !doctorAccess.create;
+                      const newSettings = {
+                        ...doctorSettings,
+                        create: !doctorSettings.create,
+                      };
+                      setDoctorSettings(newSettings);
+                      updateAccess(newSettings);
                     }}
                   />
                 </td>
@@ -147,13 +159,14 @@ function RoleSettings() {
                 <td>
                   <input
                     type="checkbox"
-                    checked={doctorAccess.edit}
+                    checked={doctorSettings.edit}
                     onChange={() => {
-                      const updatedList = roleAccessList.map((r) =>
-                        r.role === "doctor" ? { ...r, edit: !r.edit } : r,
-                      );
-                      setAccessList(updatedList);
-                      doctorAccess.edit = !doctorAccess.edit;
+                      const newSettings = {
+                        ...doctorSettings,
+                        edit: !doctorSettings.edit,
+                      };
+                      setDoctorSettings(newSettings);
+                      updateAccess(newSettings);
                     }}
                   />
                 </td>
@@ -163,13 +176,14 @@ function RoleSettings() {
                 <td>
                   <input
                     type="checkbox"
-                    checked={doctorAccess.delete}
+                    checked={doctorSettings.delete}
                     onChange={() => {
-                      const updatedList = roleAccessList.map((r) =>
-                        r.role === "doctor" ? { ...r, delete: !r.delete } : r,
-                      );
-                      setAccessList(updatedList);
-                      doctorAccess.delete = !doctorAccess.delete;
+                      const newSettings = {
+                        ...doctorSettings,
+                        delete: !doctorSettings.delete,
+                      };
+                      setDoctorSettings(newSettings);
+                      updateAccess(newSettings);
                     }}
                   />
                 </td>
@@ -195,13 +209,14 @@ function RoleSettings() {
                 <td>
                   <input
                     type="checkbox"
-                    checked={patientAccess.view}
+                    checked={patientSettings.view}
                     onChange={() => {
-                      const updatedList = accessList.map((r) =>
-                        r.role === "patient" ? { ...r, view: !r.view } : r,
-                      );
-                      setAccessList(updatedList);
-                      patientAccess.view = !patientAccess.view;
+                      const newSettings = {
+                        ...patientSettings,
+                        view: !patientSettings.view,
+                      };
+                      setPatientSettings(newSettings);
+                      updateAccess(newSettings);
                     }}
                   />
                 </td>
@@ -211,13 +226,14 @@ function RoleSettings() {
                 <td>
                   <input
                     type="checkbox"
-                    checked={patientAccess.create}
+                    checked={patientSettings.create}
                     onChange={() => {
-                      const updatedList = roleAccessList.map((r) =>
-                        r.role === "patient" ? { ...r, create: !r.create } : r,
-                      );
-                      setAccessList(updatedList);
-                      patientAccess.create = !patientAccess.create;
+                      const newSettings = {
+                        ...patientSettings,
+                        create: !patientSettings.create,
+                      };
+                      setPatientSettings(newSettings);
+                      updateAccess(newSettings);
                     }}
                   />
                 </td>
@@ -227,13 +243,14 @@ function RoleSettings() {
                 <td>
                   <input
                     type="checkbox"
-                    checked={patientAccess.edit}
+                    checked={patientSettings.edit}
                     onChange={() => {
-                      const updatedList = accessList.map((r) =>
-                        r.role === "patient" ? { ...r, edit: !r.edit } : r,
-                      );
-                      setAccessList(updatedList);
-                      patientAccess.edit = !patientAccess.edit;
+                      const newSettings = {
+                        ...patientSettings,
+                        edit: !patientSettings.edit,
+                      };
+                      setPatientSettings(newSettings);
+                      updateAccess(newSettings);
                     }}
                   />
                 </td>
@@ -243,13 +260,14 @@ function RoleSettings() {
                 <td>
                   <input
                     type="checkbox"
-                    checked={patientAccess.delete}
+                    checked={patientSettings.delete}
                     onChange={() => {
-                      const updatedList = accessList.map((r) =>
-                        r.role === "patient" ? { ...r, delete: !r.delete } : r,
-                      );
-                      setAccessList(updatedList);
-                      patientAccess.delete = !patientAccess.delete;
+                      const newSettings = {
+                        ...patientSettings,
+                        delete: !patientSettings.delete,
+                      };
+                      setPatientSettings(newSettings);
+                      updateAccess(newSettings);
                     }}
                   />
                 </td>

@@ -3,14 +3,14 @@ import { useState, useEffect, use } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../clinical/ClinicalDashboard.css";
 import { mockReports } from "../../data/reportMockData";
-import { roleAccessList } from "../../data/accessStorage";
+import { getAccessForAdmin, getAccessList } from "../../services/AccessController";
 
 function ReportHistory() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [reports, setReports] = useState(mockReports);
   const location = useLocation();
-  const adminAccess = roleAccessList.find((r) => r.role === "admin");
+  const adminAccess = getAccessForAdmin();
 
   const patient = location.state?.patient || {
     name: "John Doe",

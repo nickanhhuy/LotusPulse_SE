@@ -2,7 +2,10 @@ import "./ManageRecords.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../clinical/ClinicalDashboard.css";
-import { roleAccessList } from "../../data/accessStorage";
+import {
+  getAccessForAdmin,
+  getAccessList,
+} from "../../services/AccessController";
 
 function ManageRecords() {
   const navigate = useNavigate();
@@ -46,7 +49,7 @@ function ManageRecords() {
     },
   ];
 
-  const adminAccess = roleAccessList.find((r) => r.role === "admin");
+  const adminAccess = getAccessForAdmin();
 
   const filteredPatients = patients.filter((patient) =>
     patient.name.toLowerCase().includes(searchTerm.toLowerCase()),
