@@ -2,6 +2,7 @@ import "./ManageRecords.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../clinical/ClinicalDashboard.css";
+import { roleAccessList } from "../../data/accessStorage";
 
 function ManageRecords() {
   const navigate = useNavigate();
@@ -45,9 +46,15 @@ function ManageRecords() {
     },
   ];
 
+  const adminAccess = roleAccessList.find((r) => r.role === "admin");
+
   const filteredPatients = patients.filter((patient) =>
     patient.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
+
+  const handleViewRoleSettings = () => {
+    navigate(`/records/manage/role`);
+  };
 
   const handleViewPatientRecordSettings = (patient) => {
     navigate(`/records/manage/patient/${patient.id}`, { state: { patient } });
@@ -66,6 +73,16 @@ function ManageRecords() {
       <div className="clinical-header">
         <h1>Record Management</h1>
       </div>
+
+      <div
+        className={`risk-badge risk-medium`}
+        style={{ cursor: "pointer" }}
+        onClick={() => handleViewRoleSettings()}
+      >
+        Update Role Settings
+      </div>
+      <br />
+      <br />
 
       <div className="search-section">
         <input
@@ -91,26 +108,30 @@ function ManageRecords() {
               <tr key={patient.id}>
                 <td>{patient.name}</td>
                 <td>
-                  <span
-                    className={`risk-badge risk-low`}
-                    onClick={() => handleViewPatientReport(patient)}
-                  >
-                    Generate New Report
-                  </span>
+                  {adminAccess.create && (
+                    <span
+                      className={`risk-badge risk-low`}
+                      onClick={() => handleViewPatientReport(patient)}
+                    >
+                      Generate New Report
+                    </span>
+                  )}
 
-                  <span
-                    className={`risk-badge risk-high`}
-                    onClick={() => handleViewPatientReportHistory(patient)}
-                  >
-                    Report History
-                  </span>
+                  {adminAccess.view && (
+                    <span
+                      className={`risk-badge risk-high`}
+                      onClick={() => handleViewPatientReportHistory(patient)}
+                    >
+                      Report History
+                    </span>
+                  )}
 
-                  <span
+                  {/* <span
                     className={`risk-badge risk-medium`}
                     onClick={() => handleViewPatientRecordSettings(patient)}
                   >
                     Update Settings
-                  </span>
+                  </span> */}
                 </td>
               </tr>
             ))}

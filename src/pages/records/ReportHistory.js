@@ -3,12 +3,15 @@ import { useState, useEffect, use } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../clinical/ClinicalDashboard.css";
 import { mockReports } from "../../data/reportMockData";
+import { roleAccessList } from "../../data/accessStorage";
 
 function ReportHistory() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [reports, setReports] = useState(mockReports);
   const location = useLocation();
+  const adminAccess = roleAccessList.find((r) => r.role === "admin");
+
   const patient = location.state?.patient || {
     name: "John Doe",
     age: 52,
@@ -36,7 +39,7 @@ function ReportHistory() {
 
   const handleView = (reportId) => {
     navigate("/records/view/" + reportId, { state: { patient } });
-  }
+  };
 
   const handleDuplicate = (reportId) => {
     const reportToDuplicate = reports.find((r) => r.id === reportId);
@@ -100,26 +103,32 @@ function ReportHistory() {
               <tr key={report.id}>
                 <td>{report.date}</td>
                 <td>
-                  <span
-                    className={`risk-badge risk-medium`}
-                    onClick={() => handleView(report.id)}
-                  >
-                    View
-                  </span>
+                  {adminAccess.view && (
+                    <span
+                      className={`risk-badge risk-medium`}
+                      onClick={() => handleView(report.id)}
+                    >
+                      View
+                    </span>
+                  )}
 
-                  <span
-                    className={`risk-badge risk-low`}
-                    onClick={() => handleDuplicate(report.id)}
-                  >
-                    Duplicate
-                  </span>
+                  {adminAccess.create && (
+                    <span
+                      className={`risk-badge risk-low`}
+                      onClick={() => handleDuplicate(report.id)}
+                    >
+                      Duplicate
+                    </span>
+                  )}
 
-                  <span
-                    className={`risk-badge risk-high`}
-                    onClick={() => handleDelete(report.id)}
-                  >
-                    Delete
-                  </span>
+                  {adminAccess.delete && (
+                    <span
+                      className={`risk-badge risk-high`}
+                      onClick={() => handleDelete(report.id)}
+                    >
+                      Delete
+                    </span>
+                  )}
                 </td>
               </tr>
             ))}
